@@ -1,6 +1,6 @@
-> **Mã:** DE04-TN03-PRD · **Trạng thái:** đã chốt · **Người viết:** Design · **SRS:** [SRS.md](SRS.md)
+> **Mã:** DE05-TN03-PRD · **Trạng thái:** đã chốt · **Người viết:** Design · **SRS:** [SRS.md](SRS.md)
 
-# PRD Theo dõi chuyến và an toàn (App đặt xe công nghệ)
+# PRD Theo dõi chuyến và an toàn (App đặt xe chở khách)
 
 ## 1. Bối cảnh và vấn đề
 

@@ -1,6 +1,6 @@
-> **Mã:** DE04-TN04-SRS · **Trạng thái:** đã chốt · **Người viết:** Design · **PRD:** [PRD.md](PRD.md)
+> **Mã:** DE05-TN04-SRS · **Trạng thái:** đã chốt · **Người viết:** Design · **PRD:** [PRD.md](PRD.md)
 
-# UC-DE04-04 - Thanh toán, đánh giá và huỷ chuyến
+# UC-DE05-04 - Thanh toán, đánh giá và huỷ chuyến
 
 > SRS này mô tả chuyến từ `CHO_THANH_TOAN` tới `HOAN_THANH`, mọi đường vào `DA_HUY`, lịch sử chuyến và báo cáo sự cố.
 

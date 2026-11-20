@@ -1,6 +1,6 @@
-> **Mã:** DE04-TN04-PRD · **Trạng thái:** đã chốt · **Người viết:** Design · **SRS:** [SRS.md](SRS.md)
+> **Mã:** DE05-TN04-PRD · **Trạng thái:** đã chốt · **Người viết:** Design · **SRS:** [SRS.md](SRS.md)
 
-# PRD Thanh toán, đánh giá và huỷ chuyến (App đặt xe công nghệ)
+# PRD Thanh toán, đánh giá và huỷ chuyến (App đặt xe chở khách)
 
 ## 1. Bối cảnh và vấn đề
 

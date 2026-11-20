@@ -1,6 +1,6 @@
-> **Mã:** DE04-TN02-SRS · **Trạng thái:** đã chốt · **Người viết:** Design · **PRD:** [PRD.md](PRD.md)
+> **Mã:** DE05-TN02-SRS · **Trạng thái:** đã chốt · **Người viết:** Design · **PRD:** [PRD.md](PRD.md)
 
-# UC-DE04-02 - Ghép tài xế và nhận chuyến
+# UC-DE05-02 - Ghép tài xế và nhận chuyến
 
 > SRS này mô tả chuyến từ `DANG_TIM_TAI_XE` tới `TAI_XE_DANG_DEN` hoặc `KHONG_TIM_DUOC`; theo dõi chuyến xem [SRS TN03](../TN03-theo-doi-chuyen-an-toan/SRS.md); huỷ và phí huỷ xem [SRS TN04](../TN04-thanh-toan-danh-gia-huy/SRS.md).
 

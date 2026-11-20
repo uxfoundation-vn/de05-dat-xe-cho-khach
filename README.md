@@ -1,6 +1,6 @@
-# Đề 4 · Đặt xe công nghệ
+# Đề 5 · Đặt xe chở khách
 
-> **Mã:** DE04 · **Độ khó:** 4/8 · **Vai trò:** 2 (khách, tài xế) · **Nền tảng:** App khách và App tài xế iOS / Android
+> **Mã:** DE05 · **Độ khó:** 5/8 · **Vai trò:** 2 (khách, tài xế) · **Nền tảng:** App khách và App tài xế iOS / Android
 
 Khách đặt xe máy hoặc ô tô, thấy giá trước khi đặt, theo dõi tài xế trên bản đồ và thanh toán khi kết thúc chuyến. Tài xế nhận yêu cầu, đón khách, hoàn thành chuyến. Đây là đề đầu tiên có **hai phía dùng chung một dữ liệu theo thời gian thực**. Đề gồm 4 tính năng; mỗi tính năng có 1 PRD và 1 SRS riêng.
 
@@ -110,7 +110,7 @@ Ngoài phạm vi cả đề: đăng ký và duyệt hồ sơ tài xế, đặt x
 ## Cấu trúc repo
 
 ```text
-de04-dat-xe-cong-nghe/
+de05-dat-xe-cho-khach/
 ├── README.md
 └── docs/
     ├── TN01-dat-chuyen/                 PRD.md · SRS.md

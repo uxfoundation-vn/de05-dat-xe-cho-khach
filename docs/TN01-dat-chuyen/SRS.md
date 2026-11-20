@@ -1,6 +1,6 @@
-> **Mã:** DE04-TN01-SRS · **Trạng thái:** đã chốt · **Người viết:** Design · **PRD:** [PRD.md](PRD.md)
+> **Mã:** DE05-TN01-SRS · **Trạng thái:** đã chốt · **Người viết:** Design · **PRD:** [PRD.md](PRD.md)
 
-# UC-DE04-01 - Đặt chuyến
+# UC-DE05-01 - Đặt chuyến
 
 > SRS này mô tả từ lúc mở app đến khi chuyến được tạo ở trạng thái `DANG_TIM_TAI_XE`; ghép tài xế xem [SRS TN02](../TN02-ghep-tai-xe-nhan-chuyen/SRS.md).
 
