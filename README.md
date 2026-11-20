@@ -2,7 +2,7 @@
 
 > **Mã:** DE05 · **Độ khó:** 5/8 · **Vai trò:** 2 (khách, tài xế) · **Nền tảng:** App khách và App tài xế iOS / Android
 
-Khách đặt xe máy hoặc ô tô, thấy giá trước khi đặt, theo dõi tài xế trên bản đồ và thanh toán khi kết thúc chuyến. Tài xế nhận yêu cầu, đón khách, hoàn thành chuyến. Đây là đề đầu tiên có **hai phía dùng chung một dữ liệu theo thời gian thực**. Đề gồm 4 tính năng; mỗi tính năng có 1 PRD và 1 SRS riêng.
+Khách đặt xe máy hoặc ô tô, thấy giá trước khi đặt, theo dõi tài xế trên bản đồ và thanh toán khi kết thúc chuyến. Tài xế nhận yêu cầu, đón khách, hoàn thành chuyến. Đây là đề có **hai phía dùng chung một dữ liệu theo thời gian thực** (vị trí, trạng thái chuyến). Đề gồm 4 tính năng; mỗi tính năng có 1 PRD và 1 SRS riêng.
 
 ## Tính năng
 
