@@ -2,15 +2,15 @@
 
 # PRD Đặt xe chở khách
 
-> Đề gồm **1 tính năng**, là **1 luồng** gồm 4 bước và các màn hình: Đặt chuyến → Ghép tài xế & nhận chuyến → Theo dõi chuyến & an toàn → Thanh toán, đánh giá & huỷ chuyến. Sơ đồ chung xem [README](../README.md).
+> Đề gồm **1 tính năng**, là **1 luồng** gồm 4 bước và các màn hình: Đặt chuyến → Tìm tài xế → Theo dõi chuyến & an toàn → Thanh toán, đánh giá & huỷ chuyến. Sơ đồ chung xem [README](../README.md).
 
 ## 1. Bối cảnh và vấn đề
 
 ### 1.1 Bối cảnh
 
-Khách đặt xe máy hoặc ô tô, thấy giá trước khi đặt, theo dõi tài xế trên bản đồ và thanh toán khi kết thúc chuyến. Tài xế nhận yêu cầu, đón khách, hoàn thành chuyến. Đây là đề có **hai phía dùng chung một dữ liệu theo thời gian thực** (vị trí, trạng thái chuyến).
+Ứng dụng đặt xe máy hoặc ô tô, nhìn từ phía khách: thấy giá trước khi đặt, chờ hệ thống tìm tài xế, theo dõi tài xế trên bản đồ, đi an toàn và thanh toán, đánh giá khi kết thúc chuyến. Tài xế dùng app riêng, **ngoài phạm vi đề**; khách chỉ thấy kết quả thao tác của tài xế. Đây là đề có **dữ liệu theo thời gian thực** (vị trí, trạng thái chuyến) mà app khách phải hiển thị đúng cả khi mạng chập chờn.
 
-Khách cần xe nhanh với giá rõ ràng từ trước, và cần cảm thấy an toàn khi đi với người lạ. Tài xế cần nhận chuyến nhanh, biết rõ điểm đón và thu nhập của mỗi chuyến. Bài toán thiết kế chính là giữ hai phía luôn thấy **cùng một trạng thái** khi trạng thái thay đổi liên tục và mạng có thể chập chờn.
+Khách cần xe nhanh với giá rõ ràng từ trước, và cần cảm thấy an toàn khi đi với người lạ. Bài toán thiết kế chính là cho khách luôn thấy **đúng trạng thái chuyến** khi trạng thái thay đổi liên tục do tài xế thao tác và mạng có thể chập chờn, và **minh bạch về tiền** (giá, phí chờ, phí huỷ).
 
 ### 1.2 Vấn đề
 
@@ -22,20 +22,19 @@ Khách cần xe nhanh với giá rõ ràng từ trước, và cần cảm thấy
 | Không so được các loại xe | Chọn loại không phù hợp |
 | Giá cao điểm tăng mà không báo | Khách thấy bị lừa, đánh giá thấp |
 | Khách chờ mà không biết hệ thống đang làm gì | Huỷ sớm, đặt lại liên tục |
-| Tài xế thiếu thông tin để quyết định | Nhận rồi huỷ, hoặc bỏ qua chuyến tốt |
-| Yêu cầu hiện lúc tài xế đang lái | Mất an toàn, bấm nhầm |
-| Gửi cùng lúc cho nhiều tài xế | Nhiều người bấm nhận, chỉ một người được, số còn lại bực bội |
+| Có tài xế nhưng khách không biết là ai | Lo lắng, khó nhận ra xe |
 | Không tìm được tài xế mà không có gợi ý | Khách bỏ đi |
+| Tài xế huỷ sau khi nhận, khách phải đặt lại từ đầu | Mất thời gian, bực bội |
 | Khách không biết tài xế còn bao xa | Ra đứng chờ quá sớm hoặc quá muộn |
 | Khó nhận ra đúng xe ở chỗ đông | Lên nhầm xe, mất an toàn |
 | Gọi điện lộ số điện thoại cá nhân | Lo bị làm phiền sau chuyến |
-| Tài xế đến mà khách chưa ra | Tài xế chờ không công, huỷ chuyến |
+| Tài xế đến mà khách không biết | Bị tính phí chờ, có thể bị huỷ chuyến |
 | Gặp sự cố không biết gọi ai | Hoảng loạn, không có hỗ trợ kịp thời |
 | Người thân không biết mình đang đi tới đâu | Lo lắng khi đi đêm |
 | Giá cuối khác giá ước tính mà không giải thích | Khách thấy bị tính sai, khiếu nại |
-| Tiền mặt không có tiền lẻ, ví bị lỗi lúc thanh toán | Hai bên đứng đợi, cãi nhau |
-| Huỷ chuyến không rõ khi nào mất phí | Khách bực khi bị trừ tiền; tài xế bị huỷ sau khi đã chạy tới |
-| Đánh giá chỉ một chiều | Tài xế không được bảo vệ trước khách xấu |
+| Ví bị lỗi lúc thanh toán mà khách không biết | Đứng đợi, tranh cãi với tài xế |
+| Huỷ chuyến không rõ khi nào mất phí | Khách bực khi bị trừ tiền |
+| Bị tính phí khi lỡ hẹn mà không rõ lý do | Khiếu nại, bỏ app |
 | Đánh giá xong không có tác dụng | Khách không đánh giá nữa |
 | Không xem lại được chuyến cũ | Không có hoá đơn, không khiếu nại được |
 
@@ -45,8 +44,8 @@ Khách cần xe nhanh với giá rõ ràng từ trước, và cần cảm thấy
 - Tỉ lệ chuyến bị gọi điện vì sai điểm đón ≤ 10%.
 - Chênh lệch giữa giá ước tính và giá cuối ≤ 10% ở ≥ 90% chuyến.
 - ≥ 85% chuyến tìm được tài xế trong 2 phút.
-- Thời gian ghép trung vị ≤ 30 giây.
-- Tỉ lệ tài xế huỷ sau khi nhận ≤ 5%.
+- Tỉ lệ khách huỷ khi đang tìm ≤ 10%.
+- 100% chuyến bị tài xế huỷ được tự tìm lại mà khách không phải đặt lại.
 - ≥ 95% chuyến khách thấy vị trí tài xế cập nhật đều, không trễ quá 10 giây.
 - Tỉ lệ lên nhầm xe ≈ 0.
 - Mọi lời gọi giữa khách và tài xế đi qua số trung gian.
@@ -59,16 +58,14 @@ Khách cần xe nhanh với giá rõ ràng từ trước, và cần cảm thấy
 | **Nhóm** | **Nhu cầu với tính năng này** |
 | --- | --- |
 | Khách đi làm hằng ngày | Chọn nhanh địa chỉ nhà, công ty đã lưu |
-| Khách đi đêm | Biết giá trước, chọn điểm đón sáng, dễ thấy |
-| Khách lớn tuổi | Kéo ghim trên bản đồ thay vì gõ địa chỉ; Gọi tài xế dễ dàng, nhận ra xe nhờ biển số to |
-| Khách đang vội | Biết đang tìm, đã tìm được chưa, ai sẽ đến |
-| Tài xế xe máy | Thấy điểm đón, điểm đến, thu nhập trước khi nhận; nhận bằng một chạm |
-| Tài xế ô tô | Tránh chuyến quá xa điểm đón |
+| Khách đi đêm | Biết giá trước, chọn điểm đón sáng, dễ thấy; Biết rõ tài xế, xe, biển số ngay khi có |
+| Khách lớn tuổi | Kéo ghim trên bản đồ thay vì gõ địa chỉ; Màn chờ đơn giản, chữ to, ít lựa chọn; Gọi tài xế dễ dàng, nhận ra xe nhờ biển số to |
+| Khách đang vội | Biết đang tìm, đã tìm được chưa, bao lâu xe tới |
 | Khách đi làm | Biết chính xác khi nào ra đón xe; Thanh toán ví tự động, có hoá đơn |
 | Phụ nữ đi đêm | Chia sẻ hành trình cho người thân, nút SOS dễ thấy |
-| Tài xế | Liên lạc khách khi không tìm thấy; chỉ đường tới điểm đón, điểm đến; Không bị huỷ sau khi đã chạy tới; đánh giá được khách |
 | Khách dùng tiền mặt | Biết chính xác số tiền phải trả |
 | Khách đổi ý | Biết trước huỷ có mất phí không |
+| Khách hài lòng | Đánh giá, tip tài xế dễ dàng |
 
 ## 3. Phạm vi
 
@@ -83,18 +80,17 @@ Khách cần xe nhanh với giá rõ ràng từ trước, và cần cảm thấy
 - Ghi chú cho tài xế (ví dụ "cổng sau").
 - Chọn phương thức thanh toán trước khi đặt (chi tiết ở Bước 4).
 
-**Bước 2 · Ghép tài xế & nhận chuyến**
+**Bước 2 · Tìm tài xế**
 
-- Tài xế bật, tắt trạng thái nhận chuyến.
-- Hệ thống gửi yêu cầu lần lượt cho từng tài xế phù hợp nhất (mỗi lần một người).
-- Tài xế có 15 giây để nhận hoặc bỏ qua; xem điểm đón, điểm đến, khoảng cách tới điểm đón, thu nhập dự kiến.
-- Khách thấy trạng thái đang tìm, bán kính tìm, và thông tin tài xế khi ghép xong.
-- Không tìm được tài xế sau 3 phút: gợi ý loại xe khác hoặc đặt lại.
+- Màn đang tìm tài xế: hiệu ứng tìm, thời gian đã chờ, khu vực tìm mở rộng dần, nút Huỷ.
+- Có tài xế: ảnh, tên, đánh giá, hãng và màu xe, biển số, thời gian đến.
+- Không tìm được sau 3 phút: không mất phí, gợi ý loại xe khác hoặc thử lại.
+- Tài xế huỷ sau khi nhận: báo khách, tự tìm tài xế khác, giữ giá.
 
 **Bước 3 · Theo dõi chuyến & an toàn**
 
 - Vị trí tài xế realtime trên bản đồ, thời gian đến cập nhật liên tục.
-- Trạng thái chuyến hai phía: đang đến, đã đến, đang chờ, đang đi, kết thúc.
+- Trạng thái chuyến khách thấy: đang đến, đã đến, đang chờ, đang đi, kết thúc.
 - Gọi và nhắn tin qua kênh ẩn số; tin nhắn mẫu nhanh.
 - Thời gian chờ miễn phí khi tài xế đã đến.
 - Chia sẻ hành trình qua đường link cho người thân.
@@ -107,8 +103,8 @@ Khách cần xe nhanh với giá rõ ràng từ trước, và cần cảm thấy
 - Giá cuối: giá chốt, cộng phí chờ, tính lại khi lộ trình thay đổi nhiều.
 - Thanh toán ví tự động khi kết thúc; ví lỗi thì chuyển tiền mặt.
 - Hoá đơn chuyến trong app và qua email.
-- Huỷ chuyến: miễn phí, có phí huỷ theo thời điểm; tài xế huỷ khi khách không đến.
-- Đánh giá hai chiều: khách đánh giá tài xế, tài xế đánh giá khách; 1–5 sao kèm nhận xét.
+- Huỷ chuyến: miễn phí, có phí huỷ theo thời điểm; bị huỷ vì không ra điểm đón.
+- Khách đánh giá tài xế: 1–5 sao kèm lý do, nhận xét.
 - Tiền tip cho tài xế khi thanh toán bằng ví.
 - Lịch sử chuyến và báo cáo sự cố một chuyến.
 
@@ -118,14 +114,14 @@ Khách cần xe nhanh với giá rõ ràng từ trước, và cần cảm thấy
 - Đặt hộ người khác.
 - Mã giảm giá.
 - Giá cố định trọn gói cho chặng sân bay.
-- Tài xế chọn chuyến từ danh sách chờ.
-- Ghép nối tiếp (nhận chuyến tiếp theo khi đang chở khách) → phase sau.
-- Tài xế yêu thích của khách.
-- Điều phối theo đơn giá động.
+- App tài xế: bật nhận chuyến, thẻ yêu cầu, nhận hoặc bỏ qua.
+- Thuật toán điều phối chi tiết (khách chỉ thấy kết quả).
+- Chọn tài xế yêu thích.
 - Ghi âm trong chuyến.
 - Phát hiện bất thường tự động (dừng lâu, lệch lộ trình) → phase sau.
 - Đổi điểm đến giữa chuyến.
 - Chat với tổng đài trong app.
+- App tài xế: chỉ đường, bấm đã đến, nhập mã, bắt đầu và kết thúc chuyến.
 - Nạp tiền vào ví, liên kết ví mới (dùng luồng của ví).
 - Thẻ tín dụng, chia tiền với người đi cùng.
 - Hoàn tiền tự động; khiếu nại do tổng đài xử lý.
@@ -149,53 +145,49 @@ Giá cao điểm được ghi rõ, kèm hệ số, trước khi khách bấm đ�
 
 Địa điểm đã lưu, chuyến gần đây và gợi ý theo từ khoá giúp khách hầu như không phải gõ đầy đủ địa chỉ.
 
-### 4.5 Mỗi yêu cầu một tài xế
+### 4.5 Khách luôn biết đang ở bước nào
 
-Một yêu cầu chỉ gửi cho một tài xế mỗi lần, để ai bấm nhận cũng được chuyến. Không có tình huống tranh nhau.
+Màn chờ có chuyển động, chữ "Đang tìm tài xế gần bạn" và thời gian đã chờ.
 
-### 4.6 Đủ thông tin để quyết định trong 15 giây
+### 4.6 Có tài xế là thấy ngay
 
-Tài xế thấy những gì cần để quyết định: bao xa tới điểm đón, đi đâu, được bao nhiêu tiền. Không cần đọc chữ nhỏ.
+Ghép xong chuyển ngay sang thông tin tài xế, biển số to nhất.
 
-### 4.7 Khách luôn biết đang ở bước nào
+### 4.7 Lỗi phía tài xế thì khách không phải làm lại
 
-Màn chờ có chuyển động và chữ "Đang tìm tài xế gần bạn". Ghép xong là thấy ngay tên, ảnh, biển số, xe, đánh giá.
+Tài xế huỷ thì hệ thống tự tìm lại, giữ giá; không tìm được thì không mất phí và có gợi ý.
 
-### 4.8 An toàn khi đang lái
+### 4.8 Khách thấy đúng trạng thái thật
 
-Yêu cầu có âm thanh rõ, nút nhận to, và bỏ qua tự động khi hết giờ. Bỏ qua không bị phạt nặng.
+App khách chỉ đổi màn khi máy chủ xác nhận trạng thái mới; không đoán trước.
 
-### 4.9 Cùng một sự thật cho cả hai phía
-
-Khách và tài xế luôn thấy cùng trạng thái chuyến. Đổi trạng thái chỉ do tài xế bấm và được máy chủ xác nhận.
-
-### 4.10 Nhận ra xe trước khi lên xe
+### 4.9 Nhận ra xe trước khi lên xe
 
 Biển số in to nhất trên màn, kèm hãng, màu xe và ảnh tài xế.
 
-### 4.11 An toàn luôn trong tầm tay
+### 4.10 An toàn luôn trong tầm tay
 
 Nút an toàn có mặt ở mọi trạng thái từ khi có tài xế đến khi kết thúc chuyến, mở được bằng một chạm.
 
-### 4.12 Riêng tư hai chiều
+### 4.11 Riêng tư khi liên lạc
 
-Không bên nào thấy số điện thoại thật của bên kia. Link chia sẻ hành trình hết hạn khi chuyến kết thúc.
+Khách và tài xế không thấy số điện thoại thật của nhau. Link chia sẻ hành trình hết hạn khi chuyến kết thúc.
 
-### 4.13 Giá cuối luôn có giải thích
+### 4.12 Giá cuối luôn có giải thích
 
 Giá cuối hiện từng dòng: giá chuyến, phí chờ, điều chỉnh do lộ trình. Khác giá ước tính thì nói rõ vì sao.
 
-### 4.14 Huỷ minh bạch
+### 4.13 Huỷ minh bạch
 
 Trước khi khách xác nhận huỷ, app nói rõ có mất phí hay không và bao nhiêu. Không có phí nào hiện ra sau đó.
 
-### 4.15 Thanh toán không làm khách và tài xế phải đứng đợi
+### 4.14 Thanh toán không làm khách phải đứng đợi
 
-Ví thanh toán tự động. Ví lỗi thì báo cả hai phía và chuyển sang tiền mặt ngay.
+Ví thanh toán tự động. Ví lỗi thì báo khách ngay và chuyển sang tiền mặt.
 
-### 4.16 Đánh giá công bằng hai chiều
+### 4.15 Đánh giá có tác dụng
 
-Hai bên đánh giá độc lập, không thấy điểm của nhau trước khi gửi. Đánh giá thấp kèm lý do để đội vận hành xử lý.
+Đánh giá thấp kèm lý do để đội vận hành xử lý; lý do an toàn được xử lý ưu tiên.
 
 ## 5. Quy tắc nghiệp vụ
 
@@ -209,16 +201,13 @@ Hai bên đánh giá độc lập, không thấy điểm của nhau trước khi
 | Khoảng cách | Điểm đến cách điểm đón 300 m đến 100 km |
 | Vùng phục vụ | Điểm đón và điểm đến trong vùng phục vụ |
 | Địa điểm đã lưu | Nhà, Công ty và tối đa 10 địa điểm khác |
-| Bán kính tìm | Bắt đầu 2 km, mở rộng 1 km mỗi 30 giây, tối đa 5 km |
-| Chọn tài xế | Đang rảnh, đúng loại xe, gần nhất theo thời gian đi tới điểm đón |
-| Thời gian trả lời | 15 giây; hết giờ tính là bỏ qua |
-| Gửi lại | Không gửi lại cho tài xế đã bỏ qua chuyến này |
-| Thời gian tìm tối đa | 3 phút |
-| Tỉ lệ nhận | Theo dõi theo tài xế, không khoá tài khoản ở MVP |
-| Tài xế huỷ sau khi nhận | Tìm lại tài xế khác cho khách, ưu tiên khách trong hàng đợi |
-| Thu nhập dự kiến | Giá chốt của chuyến trừ chiết khấu nền tảng |
+| Khu vực tìm | Bắt đầu 2 km, mở rộng 1 km mỗi 30 giây, tối đa 5 km |
+| Thời gian tìm tối đa | 3 phút; hết giờ không thu phí |
+| Báo mở rộng khu vực | Sau 60 giây |
+| Tài xế huỷ sau khi nhận | Tự tìm lại, giữ giá, không phí; tối đa 2 lần |
+| Huỷ khi đang tìm | Miễn phí (Bước 4) |
 | Tần suất vị trí tài xế | 5 giây khi có chuyến |
-| Bấm "Đã đến" | Chỉ khi tài xế cách điểm đón ≤ 100 m |
+| Tài xế đã đến | Khi tài xế cách điểm đón ≤ 100 m và báo đã đến |
 | Thời gian chờ miễn phí | Xe máy 3 phút, ô tô 5 phút |
 | Phí chờ | Sau thời gian miễn phí, mỗi phút 1.000 ₫ (xe máy), 2.000 ₫ (ô tô); tối đa 10 phút |
 | Kênh liên lạc | Số trung gian, có hiệu lực tới 30 phút sau khi kết thúc chuyến |
@@ -243,7 +232,7 @@ Hai bên đánh giá độc lập, không thấy điểm của nhau trước khi
 ```mermaid
 flowchart LR
   L1["Bước 1 · Đặt chuyến"]
-  L2["Bước 2 · Ghép tài xế & nhận chuyến"]
+  L2["Bước 2 · Tìm tài xế"]
   L3["Bước 3 · Theo dõi chuyến & an toàn"]
   L4["Bước 4 · Thanh toán, đánh giá & huỷ chuyến"]
   L1 --> L2
@@ -276,32 +265,26 @@ flowchart LR
 | 4 | Chọn loại xe | Danh sách loại xe với giá ước tính, thời gian tài xế đến | Loại xe |
 | 5 | Xác nhận | Phương thức thanh toán, ghi chú cho tài xế, nút "Đặt {loại xe}" | Chuyến được tạo |
 
-### 6.3 Bước 2 · Ghép tài xế & nhận chuyến
+### 6.3 Bước 2 · Tìm tài xế
 
 ```mermaid
-sequenceDiagram
-  actor K as Khách
-  participant S as Hệ thống
-  actor T1 as Tài xế 1
-  actor T2 as Tài xế 2
-  K->>S: Đặt chuyến
-  S->>K: Đang tìm tài xế
-  S->>T1: Yêu cầu chuyến, 15 giây
-  T1-->>S: Bỏ qua hoặc hết giờ
-  S->>T2: Yêu cầu chuyến, 15 giây
-  T2-->>S: Nhận
-  S->>K: Tài xế đang đến: tên, xe, biển số
-  S->>T2: Chỉ đường tới điểm đón
+flowchart LR
+  A["Đặt chuyến, Bước 1"] --> B["Đang tìm tài xế"]
+  B -->|60 giây| C["Đang mở rộng khu vực tìm"]
+  C --> B
+  B -->|Có tài xế| D["Thông tin tài xế, Bước 3"]
+  B -->|Quá 3 phút| E["Không tìm được, gợi ý loại xe khác"]
+  D -->|Tài xế huỷ| F["Đang tìm tài xế khác, giữ giá"]
+  F --> B
+  B -->|Khách huỷ| G["Huỷ miễn phí, Bước 4"]
 ```
 
-| **Bước** | **Giai đoạn** | **Trải nghiệm khách** | **Trải nghiệm tài xế** |
+| **Bước** | **Giai đoạn** | **Trải nghiệm khách** | **Đầu ra** |
 | --- | --- | --- | --- |
-| 1 | Bật nhận chuyến | – | Bật công tắc "Nhận chuyến" ở trang chủ |
-| 2 | Đang tìm | Màn chờ, bán kính tìm mở rộng dần, nút Huỷ | – |
-| 3 | Gửi yêu cầu | – | Thẻ yêu cầu toàn màn, âm thanh, đếm ngược 15 giây |
-| 4 | Quyết định | – | Nhận hoặc Bỏ qua |
-| 5 | Ghép xong | Thông tin tài xế, thời gian đến | Chỉ đường tới điểm đón |
-| 6 | Không tìm được | Gợi ý loại xe khác, đặt lại | – |
+| 1 | Đang tìm | Màn chờ, khu vực tìm mở rộng dần, nút Huỷ | – |
+| 2 | Có tài xế | Ảnh, tên, xe, biển số, thời gian đến | Chuyến có tài xế |
+| 3 | Không tìm được | Báo không mất phí, gợi ý loại xe khác, thử lại | Chuyến kết thúc hoặc đặt lại |
+| 4 | Tài xế huỷ | Báo, tự tìm tài xế khác, giữ giá | Quay về bước 1 |
 
 ### 6.4 Bước 3 · Theo dõi chuyến & an toàn
 
@@ -318,13 +301,13 @@ flowchart LR
   F -.-> S
 ```
 
-| **Bước** | **Giai đoạn** | **Trải nghiệm khách** | **Trải nghiệm tài xế** |
+| **Bước** | **Giai đoạn** | **Trải nghiệm khách** | **Đầu ra** |
 | --- | --- | --- | --- |
-| 1 | Đang đến | Xe di chuyển trên bản đồ, "Đến trong {n} phút"; gọi, nhắn tài xế | Chỉ đường tới điểm đón; gọi, nhắn khách |
-| 2 | Đã đến | Thông báo "Tài xế đã đến", đếm thời gian chờ | Bấm "Đã đến"; đếm thời gian chờ |
-| 3 | Lên xe | Kiểm tra biển số; đọc mã xác nhận (ban đêm) | Hỏi mã, bấm "Bắt đầu chuyến" |
-| 4 | Đang đi | Lộ trình, thời gian tới nơi; chia sẻ hành trình, SOS | Chỉ đường tới điểm đến |
-| 5 | Kết thúc | Màn thanh toán (Bước 4) | Bấm "Kết thúc chuyến" |
+| 1 | Đang đến | Xe di chuyển trên bản đồ, "Đến trong {n} phút"; gọi, nhắn tài xế | Khách ra điểm đón đúng lúc |
+| 2 | Đã đến | Thông báo "Tài xế đã đến", đếm thời gian chờ | – |
+| 3 | Lên xe | Kiểm tra biển số; đọc mã xác nhận cho tài xế (ban đêm) | Chuyến bắt đầu |
+| 4 | Đang đi | Lộ trình, thời gian tới nơi; chia sẻ hành trình, SOS | – |
+| 5 | Kết thúc | Màn thanh toán (Bước 4) | Chuyến kết thúc |
 
 ### 6.5 Bước 4 · Thanh toán, đánh giá & huỷ chuyến
 
@@ -333,9 +316,9 @@ flowchart LR
   A{"Chuyến kết thúc thế nào?"} -->|Hoàn thành| B["Giá cuối có giải thích"]
   B --> C{"Phương thức"}
   C -->|Ví| D["Trừ ví tự động"]
-  C -->|Tiền mặt| E["Khách trả, tài xế xác nhận đã thu"]
+  C -->|Tiền mặt| E["Khách trả tiền mặt cho tài xế"]
   D -->|Lỗi| E
-  D --> F["Đánh giá hai chiều, tip"]
+  D --> F["Đánh giá tài xế, tip"]
   E --> F
   F --> G["Hoá đơn, lịch sử chuyến"]
   A -->|Huỷ| H{"Huỷ có phí?"}
@@ -345,13 +328,13 @@ flowchart LR
   J --> G
 ```
 
-| **Bước** | **Giai đoạn** | **Trải nghiệm khách** | **Trải nghiệm tài xế** |
+| **Bước** | **Giai đoạn** | **Trải nghiệm khách** | **Đầu ra** |
 | --- | --- | --- | --- |
-| 1 | Kết thúc | Màn giá cuối với từng dòng | Màn thu tiền: số tiền, phương thức |
-| 2 | Thanh toán | Ví tự trừ; tiền mặt hiện số tiền cần trả | Ví: "Đã thanh toán"; tiền mặt: bấm "Đã thu tiền" |
-| 3 | Đánh giá | Chọn sao, lý do, nhận xét, tip | Chọn sao, lý do |
-| 4 | Sau chuyến | Hoá đơn trong lịch sử và email | Thu nhập chuyến cộng vào ngày |
-| 5 | Huỷ | Thấy phí (nếu có) trước khi xác nhận | Được báo khi khách huỷ; huỷ được khi khách không đến |
+| 1 | Kết thúc | Màn giá cuối với từng dòng | – |
+| 2 | Thanh toán | Ví tự trừ; tiền mặt hiện số tiền cần trả, tài xế xác nhận đã thu | Chuyến hoàn thành |
+| 3 | Đánh giá | Chọn sao, lý do, nhận xét, tip | Đánh giá |
+| 4 | Sau chuyến | Hoá đơn trong lịch sử và email | Hoá đơn |
+| 5 | Huỷ | Thấy phí (nếu có) trước khi xác nhận; được báo rõ khi bị huỷ vì không ra điểm đón | Chuyến huỷ |
 
 ## 7. Use Cases, User Stories và Acceptance Criteria
 
@@ -423,39 +406,11 @@ AC01: Lưu Nhà, Công ty và tối đa 10 địa điểm khác từ ô tìm ki�
 
 AC02: Sửa, xoá địa điểm đã lưu trong Hồ sơ.
 
-### Bước 2 · Ghép tài xế & nhận chuyến
+### Bước 2 · Tìm tài xế
 
-#### UC4. Tài xế sẵn sàng nhận chuyến
+#### UC4. Chờ ghép tài xế
 
-##### US4.1 Bật, tắt nhận chuyến
-
-User Story: Là tài xế, tôi muốn bật, tắt nhận chuyến để chỉ nhận yêu cầu khi tôi sẵn sàng.
-
-AC01: Công tắc "Nhận chuyến" ở trang chủ; bật thì hiện "Đang chờ chuyến" và chia sẻ vị trí.
-
-AC02: Chưa cấp quyền vị trí luôn bật → không bật được nhận chuyến, có hướng dẫn.
-
-AC03: Tắt nhận chuyến khi đang có yêu cầu → yêu cầu đó tính là bỏ qua.
-
-#### UC5. Tài xế nhận yêu cầu
-
-##### US5.1 Xem yêu cầu và quyết định
-
-User Story: Là tài xế, tôi muốn thấy đủ thông tin chuyến để quyết định nhận hay không trong vài giây.
-
-AC01: Thẻ yêu cầu hiện: loại xe, khoảng cách và thời gian tới điểm đón, tên điểm đón, điểm đến, quãng đường chuyến, thu nhập dự kiến, phương thức thanh toán, đánh giá của khách.
-
-AC02: Âm thanh và rung khi có yêu cầu, kể cả khi app đang ở nền.
-
-AC03: Đếm ngược 15 giây hiện rõ; hết giờ tự đóng và tính là bỏ qua.
-
-AC04: Nút "Nhận" chiếm phần lớn chiều rộng; "Bỏ qua" là nút phụ.
-
-AC05: Bấm Nhận khi chuyến vừa bị khách huỷ → báo chuyến không còn.
-
-#### UC6. Khách chờ ghép tài xế
-
-##### US6.1 Theo dõi việc tìm tài xế
+##### US4.1 Theo dõi việc tìm tài xế
 
 User Story: Là khách, tôi muốn biết hệ thống đang tìm tài xế cho tôi để không phải đặt lại.
 
@@ -465,7 +420,7 @@ AC02: Sau 60 giây hiện "Đang mở rộng khu vực tìm".
 
 AC03: Có nút Huỷ chuyến; huỷ lúc đang tìm không mất phí (Bước 4).
 
-##### US6.2 Nhận thông tin tài xế
+##### US4.2 Nhận thông tin tài xế
 
 User Story: Là khách, tôi muốn thấy ngay tài xế nào sẽ đến để nhận ra xe khi tới.
 
@@ -473,7 +428,7 @@ AC01: Ghép xong → hiện ảnh, tên, đánh giá, hãng và màu xe, biển 
 
 AC02: Thông báo đẩy khi app ở nền.
 
-##### US6.3 Không tìm được tài xế
+##### US4.3 Không tìm được tài xế
 
 User Story: Là khách, tôi muốn được gợi ý khi không tìm được tài xế để vẫn có cách đi.
 
@@ -481,15 +436,21 @@ AC01: Sau 3 phút không ghép được → báo rõ, chuyến kết thúc, khô
 
 AC02: Gợi ý loại xe khác đang có tài xế gần, kèm giá; hoặc "Thử lại".
 
-#### UC7. Tài xế huỷ sau khi nhận
+#### UC5. Tài xế huỷ sau khi nhận
 
-AC01: Tài xế huỷ → khách được báo và hệ thống tự tìm tài xế khác, khách không phải đặt lại.
+##### US5.1 Được tìm lại tự động
+
+User Story: Là khách, tôi muốn được tìm tài xế khác ngay khi tài xế huỷ, không phải đặt lại.
+
+AC01: Báo "Tài xế đã huỷ chuyến. Đang tìm tài xế khác", giá giữ nguyên, không phí.
+
+AC02: Tìm lại tối đa 2 lần; lần thứ 3 tài xế huỷ → chuyến kết thúc, không thu phí.
 
 ### Bước 3 · Theo dõi chuyến & an toàn
 
-#### UC8. Theo dõi tài xế đến đón
+#### UC6. Theo dõi tài xế đến đón
 
-##### US8.1 Thấy tài xế đang đến
+##### US6.1 Thấy tài xế đang đến
 
 User Story: Là khách, tôi muốn thấy tài xế đang ở đâu và bao lâu nữa đến để ra đón xe đúng lúc.
 
@@ -501,39 +462,37 @@ AC03: Biển số hiện to nhất; kèm ảnh, tên, đánh giá, hãng và mà
 
 AC04: Mất kết nối vị trí tài xế > 30 giây → hiện "Đang cập nhật vị trí tài xế", giữ vị trí cuối.
 
-##### US8.2 Liên hệ với nhau
+##### US6.2 Liên hệ với nhau
 
-User Story: Là khách hoặc tài xế, tôi muốn gọi, nhắn tin cho bên kia mà không lộ số điện thoại để liên lạc an toàn.
+User Story: Là khách, tôi muốn gọi, nhắn tin cho tài xế mà không lộ số điện thoại để liên lạc an toàn.
 
-AC01: Nút Gọi và Nhắn tin ở cả hai app; gọi qua số trung gian.
+AC01: Nút Gọi và Nhắn tin trên màn theo dõi chuyến; gọi qua số trung gian.
 
 AC02: Tin nhắn mẫu nhanh: "Tôi đang ra", "Tôi đứng ở cổng", "Anh/chị ở đâu ạ?".
 
 AC03: Tin nhắn mới có thông báo, kể cả khi app ở nền.
 
-#### UC9. Đón khách
+#### UC7. Đón khách
 
-##### US9.1 Tài xế báo đã đến
+##### US7.1 Biết khi tài xế đã đến
 
-User Story: Là tài xế, tôi muốn báo đã đến điểm đón để khách ra đúng lúc và trạng thái chuyến đúng thực tế.
+User Story: Là khách, tôi muốn biết ngay khi tài xế đã đến điểm đón để ra đúng lúc, không bị tính phí chờ.
 
-AC01: Nút "Đã đến" chỉ bật khi tài xế cách điểm đón ≤ 100 m.
+AC01: Tài xế đến (trong 100 m điểm đón) → khách nhận thông báo "Tài xế đã đến" kèm biển số, màu và hãng xe.
 
-AC02: Khách nhận thông báo "Tài xế đã đến" kèm biển số.
+AC02: Màn theo dõi hiện đồng hồ thời gian chờ miễn phí; hết giờ thì báo đang tính phí chờ và số tiền mỗi phút.
 
-AC03: Hai phía cùng thấy đồng hồ thời gian chờ miễn phí; hết giờ thì báo cho khách là bắt đầu tính phí chờ.
+##### US7.2 Bắt đầu chuyến an toàn
 
-##### US9.2 Bắt đầu chuyến an toàn
+User Story: Là khách đi đêm, tôi muốn có mã xác nhận để chắc chắn mình lên đúng xe.
 
-User Story: Là khách đi đêm, tôi muốn tài xế phải nhập mã xác nhận trước khi bắt đầu chuyến để không lên nhầm xe.
+AC01: Chuyến 22:00–05:00 hiện mã xác nhận 4 số cho khách; khách đọc mã cho tài xế khi lên xe, đúng mã chuyến mới bắt đầu.
 
-AC01: Chuyến 22:00–05:00 hiện mã xác nhận 4 số cho khách; tài xế nhập đúng mã mới bắt đầu được.
+AC02: Chuyến bắt đầu → màn chuyển sang "Đang đi" với lộ trình và giờ tới nơi.
 
-AC02: Tài xế bấm "Bắt đầu chuyến" → hai phía chuyển sang "Đang đi".
+#### UC8. An toàn trong chuyến
 
-#### UC10. An toàn trong chuyến
-
-##### US10.1 Chia sẻ hành trình
+##### US8.1 Chia sẻ hành trình
 
 User Story: Là khách đi đêm, tôi muốn người thân thấy tôi đang đi tới đâu.
 
@@ -541,7 +500,7 @@ AC01: Nút "Chia sẻ hành trình" tạo link xem trên trình duyệt: biển 
 
 AC02: Link hết hạn khi chuyến kết thúc hoặc bị huỷ.
 
-##### US10.2 SOS
+##### US8.2 SOS
 
 User Story: Là khách, tôi muốn gọi trợ giúp khẩn cấp nhanh để an toàn khi có sự cố.
 
@@ -553,17 +512,17 @@ AC03: Gửi vị trí cho liên hệ khẩn cấp qua SMS kèm link hành trình
 
 AC04: Chưa có liên hệ khẩn cấp → mời thêm ngay tại bảng.
 
-#### UC11. Kết thúc chuyến
+#### UC9. Kết thúc chuyến
 
-AC01: Tài xế bấm "Kết thúc chuyến" tại điểm đến hoặc nơi khách xuống; xa điểm đến > 500 m thì hỏi xác nhận.
+AC01: Tài xế kết thúc chuyến tại điểm đến hoặc nơi khách xuống → khách chuyển sang màn thanh toán (Bước 4).
 
-AC02: Hai phía chuyển sang màn thanh toán (Bước 4).
+AC02: Kết thúc cách điểm đến > 500 m → khách thấy ghi chú khoảng cách, lý do và nút báo sự cố.
 
 ### Bước 4 · Thanh toán, đánh giá & huỷ chuyến
 
-#### UC12. Thanh toán
+#### UC10. Thanh toán
 
-##### US12.1 Chọn phương thức trước khi đặt
+##### US10.1 Chọn phương thức trước khi đặt
 
 User Story: Là khách, tôi muốn chọn phương thức thanh toán trước khi đặt để không lúng túng lúc kết thúc chuyến.
 
@@ -571,7 +530,7 @@ AC01: Mặc định là phương thức đã dùng ở chuyến trước; đổi
 
 AC02: Ví liên kết hiện số dư; không đủ số dư cho giá ước tính → gợi ý tiền mặt.
 
-##### US12.2 Thanh toán khi kết thúc
+##### US10.2 Thanh toán khi kết thúc
 
 User Story: Là khách, tôi muốn biết chính xác mình trả bao nhiêu và vì sao.
 
@@ -579,13 +538,13 @@ AC01: Màn giá cuối hiện: giá chuyến, phí chờ, điều chỉnh lộ t
 
 AC02: Giá cuối khác giá ước tính → một dòng giải thích lý do.
 
-AC03: Ví → tự trừ, hiện "Đã thanh toán"; tài xế cũng thấy ngay.
+AC03: Ví → tự trừ, hiện "Đã thanh toán".
 
-AC04: Ví lỗi → báo cả hai phía, chuyển tiền mặt, tài xế thu tiền.
+AC04: Ví lỗi → báo khách, chuyển tiền mặt, hiện số tiền cần trả tài xế.
 
-AC05: Tiền mặt → tài xế bấm "Đã thu tiền"; khách thấy "Đã thanh toán".
+AC05: Tiền mặt → hiện "Vui lòng trả tài xế {số tiền}"; tài xế xác nhận đã thu thì khách thấy "Đã thanh toán".
 
-##### US12.3 Hoá đơn và lịch sử
+##### US10.3 Hoá đơn và lịch sử
 
 User Story: Là khách, tôi muốn xem lịch sử chuyến và hoá đơn để đối chiếu, khiếu nại khi có vấn đề.
 
@@ -597,9 +556,9 @@ AC03: Hoá đơn gửi email nếu khách có email.
 
 AC04: "Đặt lại" tạo chuyến mới với cùng điểm đón, điểm đến.
 
-#### UC13. Huỷ chuyến
+#### UC11. Huỷ chuyến
 
-##### US13.1 Khách huỷ
+##### US11.1 Khách huỷ
 
 User Story: Là khách, tôi muốn biết trước huỷ có mất phí không để quyết định.
 
@@ -611,17 +570,17 @@ AC03: Tài xế đến trễ > 5 phút so với dự kiến → huỷ miễn ph�
 
 AC04: Không huỷ được khi đã bắt đầu chuyến.
 
-##### US13.2 Tài xế huỷ vì khách không đến
+##### US11.2 Bị huỷ vì không ra điểm đón
 
-User Story: Là tài xế, tôi muốn huỷ chuyến khi khách không đến và được bù để không mất công chờ.
+User Story: Là khách, tôi muốn biết rõ vì sao bị tính phí khi lỡ hẹn với tài xế.
 
-AC01: Sau 10 phút chờ tính phí, tài xế có nút "Khách không đến"; khách bị tính phí huỷ, phí chờ và được báo.
+AC01: Tài xế chờ quá 10 phút chờ tính phí và huỷ vì không gặp khách → khách nhận thông báo kèm số phút chờ, phí huỷ, phí chờ.
 
-AC02: Tài xế huỷ vì lý do khác trước khi bắt đầu chuyến, kể cả khi đã đến điểm đón (Bước 2) → khách không bị phí, hệ thống tìm tài xế khác.
+AC02: Tài xế huỷ vì lý do khác trước khi bắt đầu chuyến, kể cả khi đã đến điểm đón → khách không bị phí, hệ thống tìm tài xế khác (Bước 2).
 
-#### UC14. Đánh giá
+#### UC12. Đánh giá
 
-##### US14.1 Khách đánh giá tài xế
+##### US12.1 Khách đánh giá tài xế
 
 User Story: Là khách, tôi muốn đánh giá tài xế sau chuyến để góp phần giữ chất lượng dịch vụ.
 
@@ -633,15 +592,11 @@ AC03: 5 sao hiện lời khen gợi ý và tip (khi dùng ví).
 
 AC04: Đánh giá thấp liên quan an toàn tạo yêu cầu cho đội an toàn.
 
-##### US14.2 Tài xế đánh giá khách
+##### US12.2 Điểm đánh giá của khách
 
-User Story: Là tài xế, tôi muốn đánh giá khách sau chuyến để cộng đồng đi lại tốt hơn.
+AC01: Tài xế cũng đánh giá khách trên app tài xế (ngoài phạm vi); khách chỉ thấy điểm trung bình của mình trong hồ sơ, không thấy điểm từng chuyến.
 
-AC01: Tài xế đánh giá khách sau khi thu tiền; lý do khi ≤ 3 sao.
-
-AC02: Hai bên không thấy điểm cụ thể bên kia cho mình; chỉ thấy điểm trung bình.
-
-#### UC15. Báo cáo sự cố
+#### UC13. Báo cáo sự cố
 
 AC01: Từ chi tiết chuyến trong 7 ngày, chọn loại sự cố (sai giá, quên đồ, an toàn, khác) và mô tả.
 
@@ -658,11 +613,10 @@ AC02: Gửi xong có mã yêu cầu và thời gian phản hồi dự kiến.
 | Tỉ lệ bỏ khi cao điểm | Phiên bỏ sau khi thấy cao điểm / phiên gặp cao điểm | Theo dõi |
 | Tỉ lệ dùng địa điểm đã lưu | Điểm đến chọn từ đã lưu, gần đây / tổng chuyến | ≥ 40% |
 | Tỉ lệ ghép thành công | Chuyến có tài xế / chuyến đã đặt | ≥ 85% |
-| Thời gian ghép | Từ đặt tới tài xế nhận | ≤ 30 giây (trung vị) |
-| Tỉ lệ nhận của tài xế | Yêu cầu được nhận / yêu cầu đã gửi | ≥ 60% |
+| Thời gian ghép | Từ đặt tới có tài xế | ≤ 30 giây (trung vị) |
 | Tỉ lệ khách huỷ khi đang tìm | Chuyến bị khách huỷ khi `DANG_TIM_TAI_XE` / chuyến đã đặt | ≤ 10% |
-| Tỉ lệ tài xế huỷ sau nhận | Chuyến bị tài xế huỷ / chuyến đã nhận | ≤ 5% |
-| Thời gian tài xế tới điểm đón | Từ nhận tới Đã đến | Theo dõi |
+| Dùng gợi ý khi không tìm được | Khách chọn loại xe khác hoặc thử lại / lần không tìm được | Theo dõi |
+| Tìm lại sau khi tài xế huỷ | Chuyến tìm lại được tài xế / chuyến bị tài xế huỷ | ≥ 80% |
 | Độ trễ vị trí | Từ tài xế gửi vị trí tới app khách hiện | ≤ 10 giây ở ≥ 95% lần |
 | Độ chính xác thời gian đến | Thời gian đến dự báo lúc nhận so với thực tế | Sai lệch ≤ 2 phút ở ≥ 80% chuyến |
 | Tỉ lệ dùng liên lạc | Chuyến có gọi hoặc nhắn / tổng chuyến | Theo dõi; cao là dấu hiệu điểm đón chưa rõ |
@@ -685,11 +639,9 @@ AC02: Gửi xong có mã yêu cầu và thời gian phản hồi dự kiến.
 | Định vị trong nhà | GPS lệch | Nhắc kiểm tra ghim khi độ chính xác kém |
 | Giá cao điểm | Dễ gây phản ứng | Báo rõ trước khi đặt, cần đồng ý |
 | Bấm đặt nhiều lần | Tạo chuyến trùng | Idempotency key cho mỗi lần đặt |
-| Thông báo đẩy chậm | Tài xế nhận yêu cầu muộn, mất giây | Giữ kết nối realtime khi bật nhận chuyến; đẩy là dự phòng |
-| Vị trí tài xế cũ | Chọn sai tài xế gần nhất | Tài xế gửi vị trí mỗi 5 giây khi rảnh |
-| Tài xế bỏ qua nhiều | Khách chờ lâu | Mở rộng bán kính; theo dõi tỉ lệ nhận |
-| Cạnh tranh dữ liệu | Khách huỷ cùng lúc tài xế bấm nhận | Máy chủ là nguồn đúng; chấp nhận theo thứ tự đến |
-| An toàn khi lái | Thao tác trên điện thoại | Nút to, âm thanh rõ, không bắt nhập chữ |
+| Hệ thống điều phối | Ghép chậm ở giờ cao điểm | Mở rộng khu vực; báo khách bằng chữ, không để màn đứng yên |
+| Thông báo đẩy chậm | Khách không biết đã có tài xế | Giữ kết nối realtime khi đang tìm; đẩy là dự phòng |
+| Cạnh tranh dữ liệu | Khách huỷ cùng lúc có tài xế | Máy chủ là nguồn đúng; app hiện theo trạng thái máy chủ trả về |
 | Kết nối mạng tài xế | Mất mạng giữa đường | Lưu vị trí, gửi bù khi có mạng; khách thấy trạng thái đang cập nhật |
 | Dịch vụ số trung gian | Phụ thuộc nhà cung cấp viễn thông | Nhắn tin trong app làm dự phòng |
 | SOS bấm nhầm | Gọi 113 ngoài ý muốn | Giữ 2 giây; đếm ngược có nút huỷ |
@@ -699,7 +651,7 @@ AC02: Gửi xong có mã yêu cầu và thời gian phản hồi dự kiến.
 | Trừ tiền hai lần | Gửi lại yêu cầu thanh toán | Idempotency key theo chuyến |
 | Phí huỷ gây tranh cãi | Khách không đồng ý phí | Luôn báo trước; khiếu nại qua báo cáo sự cố |
 | Thu phí huỷ tiền mặt | Không thu được ngay | Cộng vào chuyến sau |
-| Đánh giá trả đũa | Bên này chấm thấp vì bị chấm thấp | Ẩn điểm từng chuyến; chỉ hiện trung bình |
+| Đánh giá trả đũa | Khách chấm thấp vì bị chấm thấp | Ẩn điểm từng chuyến; chỉ hiện trung bình |
 
 ## 10. Câu hỏi mở
 
@@ -707,17 +659,16 @@ AC02: Gửi xong có mã yêu cầu và thời gian phản hồi dự kiến.
 
 - Có cho đặt khi điểm đón ngoài vùng nhưng điểm đến trong vùng? → **Đã chốt:** Không. Cả điểm đón và điểm đến phải trong vùng phục vụ (SRS BR-02).
 - Hệ số cao điểm tối đa là bao nhiêu, ai quyết định? → **Đã chốt:** Hệ thống tự tính từ dữ liệu giao thông Google Maps, trần ×2,0 (SRS BR-07).
-- Có gợi ý điểm đón chuẩn (cổng chính, sảnh) cho toà nhà lớn? → **Đã chốt:** Có, tối đa 3 điểm chuẩn (SRS BR-44).
+- Có gợi ý điểm đón chuẩn (cổng chính, sảnh) cho toà nhà lớn? → **Đã chốt:** Có, tối đa 3 điểm chuẩn (SRS BR-10).
 - Giá ước tính có hiển thị dạng khoảng (từ–đến) thay vì một con số? → **Đã chốt:** Không. Hiện một con số (SRS BR-05).
-- Có ẩn điểm đến với tài xế trước khi nhận để tránh chọn chuyến không? → **Đã chốt:** Có. Trước khi nhận chỉ thấy quãng đường và hướng đi.
-- Tài xế bỏ qua nhiều lần có bị tạm tắt nhận chuyến không? → **Đã chốt:** Có. Bỏ qua 3 yêu cầu liên tiếp thì tự tạm tắt nhận chuyến (SRS BR-46).
-- Thời gian tìm tối đa 3 phút có hợp lý ở giờ cao điểm? → **Đã chốt:** Giữ 3 phút (SRS BR-17).
-- Khách có thấy vị trí các tài xế gần đó trước khi đặt? → **Đã chốt:** Có, tối đa 10 xe gần trên bản đồ, vị trí làm lệch (Bước 1 BR-45).
-- Mã xác nhận có áp dụng cho mọi chuyến, không chỉ ban đêm? → **Đã chốt:** Không. Chỉ chuyến có giờ đón 22:00–05:00 (SRS BR-26).
-- Phí chờ có áp dụng cho xe máy không? → **Đã chốt:** Có, sau 3 phút chờ miễn phí (SRS BR-25).
+- Thời gian tìm tối đa 3 phút có hợp lý ở giờ cao điểm? → **Đã chốt:** Giữ 3 phút (SRS BR-15).
+- Khách có thấy vị trí các tài xế gần đó trước khi đặt? → **Đã chốt:** Có, tối đa 10 xe gần trên bản đồ, vị trí làm lệch (Bước 1 BR-11).
+- Tài xế huỷ thì có tính lại giá? → **Đã chốt:** Không; giữ giá chốt, xoá phí chờ đã phát sinh (SRS BR-17).
+- Mã xác nhận có áp dụng cho mọi chuyến, không chỉ ban đêm? → **Đã chốt:** Không. Chỉ chuyến có giờ đón 22:00–05:00 (SRS BR-25).
+- Phí chờ có áp dụng cho xe máy không? → **Đã chốt:** Có, sau 3 phút chờ miễn phí (SRS BR-24).
 - Đội an toàn hoạt động 24/7 hay theo khung giờ? → **Đã chốt:** Trực 24/7.
 - Có phát hiện xe dừng lâu bất thường ngay ở MVP? → **Đã chốt:** Không ở MVP.
-- Phí huỷ tiền mặt có giới hạn số chuyến cộng dồn không? → **Đã chốt:** Giới hạn theo số tiền, không theo số chuyến: nợ > 50.000 ₫ phải trả trước khi đặt chuyến mới (SRS BR-38).
-- Có cho khách sửa đánh giá sau khi gửi? → **Đã chốt:** Không. Mỗi bên đánh giá 1 lần (SRS BR-40).
-- Ngưỡng lộ trình dài hơn 20% có hợp lý không? → **Đã chốt:** Giữ 20% (SRS BR-33).
-- Tip có áp dụng cho tiền mặt (khách đưa thêm, tài xế ghi nhận) không? → **Đã chốt:** Không. Tip chỉ qua ví (SRS BR-39).
+- Phí huỷ tiền mặt có giới hạn số chuyến cộng dồn không? → **Đã chốt:** Giới hạn theo số tiền, không theo số chuyến: nợ > 50.000 ₫ phải trả trước khi đặt chuyến mới (SRS BR-37).
+- Có cho khách sửa đánh giá sau khi gửi? → **Đã chốt:** Không. Mỗi chuyến đánh giá 1 lần (SRS BR-39).
+- Ngưỡng lộ trình dài hơn 20% có hợp lý không? → **Đã chốt:** Giữ 20% (SRS BR-32).
+- Tip có áp dụng cho tiền mặt không? → **Đã chốt:** Không. Tip chỉ qua ví (SRS BR-38).
